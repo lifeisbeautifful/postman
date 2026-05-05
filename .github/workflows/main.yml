@@ -11,7 +11,7 @@ jobs:
       - name: Run Tests with Report
         run: |
           newman run "Dummy_json.postman_collection.json" \
-          --env-var "baseUrl=https://dummyjson.com" \
+          -e "Dummy json.postman_environment.json" \
           -r htmlextra --reporter-htmlextra-export report.html
 
       - name: Upload Report
