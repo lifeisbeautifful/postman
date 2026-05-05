@@ -9,4 +9,4 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
       - name: Run Tests
-        run: newman run Dummy_json.postman_collection.json --env-var "baseUrl=https://dummyjson.com/auth/login"
+        run: newman run "Dummy_json.postman_collection.json" --env-var "baseUrl=https://dummyjson.com/auth/login"
