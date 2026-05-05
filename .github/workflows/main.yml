@@ -1,0 +1,12 @@
+name: API Tests
+on: [push] # Тести будуть запускатися при кожному завантаженні файлів
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run Tests
+        run: newman run Dummy_json.postman_collection.json
