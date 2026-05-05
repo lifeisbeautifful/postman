@@ -12,6 +12,7 @@ jobs:
         run: |
           newman run Dummy_json.postman_collection.json \
           -e Dummy_json.postman_environment.json \
+          --env-var "baseUrl=${{ secrets.BASE_URL }}" \
           -r htmlextra --reporter-htmlextra-export report.html
 
       - name: Upload Report
