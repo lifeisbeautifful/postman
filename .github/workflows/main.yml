@@ -1,22 +1,17 @@
-name: API Tests
-on: [push] # Тести будуть запускатися при кожному завантаженні файлів
+name: Automated API tests using Postman CLI
+
+on: push
 
 jobs:
-  test:
+  automated-api-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Newman
-        run: npm install -g newman newman-reporter-htmlextra
-      - name: Run Tests with Report
+      - name: Install Postman CLI
         run: |
-          newman run Dummy_json.postman_collection.json \
-          -e Dummy_json.postman_environment.json \
-          --env-var "baseUrl=${{ secrets.BASE_URL }}" \
-          -r cli,htmlextra --reporter-htmlextra-export report.html
-
-      - name: Upload Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: postman-report
-          path: report.html
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "5963765-2a5432ed-3ddb-4e7a-ac00-dc4beff48357" -e "5963765-869cd8ae-fc16-4141-97b4-1a909da3038d"
