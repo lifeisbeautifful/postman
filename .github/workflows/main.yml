@@ -16,4 +16,13 @@ jobs:
           PM_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
       - name: Run API tests
         run: |
-          postman collection run "5963765-2a5432ed-3ddb-4e7a-ac00-dc4beff48357" -e "5963765-869cd8ae-fc16-4141-97b4-1a909da3038d"
+          postman collection run "5963765-2a5432ed-3ddb-4e7a-ac00-dc4beff48357" \
+          -e "5963765-869cd8ae-fc16-4141-97b4-1a909da3038d" \
+          --env-var "baseUrl=${{ secrets.BASE_URL }}" \
+          -r cli,htmlextra --reporter-htmlextra-export report.html
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-report
+          path: report.html
