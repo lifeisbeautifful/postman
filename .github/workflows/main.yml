@@ -22,10 +22,17 @@ jobs:
           postman collection run "5963765-2a5432ed-3ddb-4e7a-ac00-dc4beff48357" \
           -e "5963765-869cd8ae-fc16-4141-97b4-1a909da3038d" \
           --env-var "baseUrl=${{ secrets.BASE_URL }}" \
-          -r cli,html --reporter-html-export report.html
+          -r cli,html --reporter-html-export index.html
 
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
           name: postman-report
-          path: report.html
+          path: index.html
+
+      - name: Deploy Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: . # папка, де лежить report.html
+          destination_dir: docs # (Опціонально) щоб звіт лежав у папці docs на сайті
